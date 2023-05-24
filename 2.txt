@@ -1,0 +1,59 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+df = pd.read_csv("Studentperformance.csv")
+
+df
+
+df.isnull()
+
+series = pd.isnull(df["Math_Score"])
+df[series]
+
+from sklearn.preprocessing import LabelEncoder
+le = LabelEncoder()
+df['Gender'] = le.fit_transform(df['Gender'])
+newdf=df
+df
+
+
+mv=df['Math_Score'].mean()
+df['Math_Score'].fillna(value=mv, inplace=True)
+df
+
+df['Math_Score'].mean()
+
+df.fillna(0)
+
+df.replace(to_replace=np.nan, value=99)
+
+df.dropna()
+
+#outliers:
+from scipy import stats
+
+z=np.abs(stats.zscore(df['Math_Score']))
+
+print(z)
+
+threshold=0.18
+
+sample_outliers=np.where(z<threshold)
+sample_outliers
+
+#removing outliers:
+new_df=df
+for i in sample_outliers:
+    new_df.drop(i,inplace=True)
+new_df
+
+
+col = ['Math_Score', 'Reading_Score' , 'Writing_Score','Placement_Score']
+df.boxplot(col)
+plt.show()
+
+fig, ax=plt.subplots(figsize=(18,10))
+ax.scatter(df['Placement_Score'],df['Placement_Offer_Count'])
+plt.show()
