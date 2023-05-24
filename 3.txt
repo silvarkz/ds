@@ -1,0 +1,70 @@
+import numpy as np
+import pandas as pd
+
+df = pd.read_csv("emp.csv")
+
+df.head()
+
+df.mean()
+
+df.loc[:,'Age'].mean()
+
+df.mean(axis=1)[0:4]
+
+df.median()
+
+df.loc[:,'Salary'].median()
+
+df.median(axis=1)[0:4]
+
+df.mode()
+
+df.loc[:,'Age'].mode()
+
+df.min()
+
+df.loc[:,'Age'].min(skipna = False)
+
+
+df.max()
+
+df.loc[:,'Salary'].min(skipna = False)
+
+df.std()
+
+df.loc[:,'Age'].std()
+
+df.std(axis=1)[0:4]
+
+df.groupby(['Age'])['Salary'].mean()
+
+df_u=df.rename(columns= {'Salary':'income'},inplace=False)
+(df_u.groupby(['Age']).income.mean())
+
+from sklearn import preprocessing
+enc = preprocessing.LabelEncoder()
+df['Gender'] = enc.fit_transform(df['Gender'])
+df1=df
+df
+
+
+from sklearn import preprocessing
+enc = preprocessing.OneHotEncoder()
+enc_df = pd.DataFrame(enc.fit_transform(df[['Salary']]).toarray())
+df_encode =df_u.join(enc_df)
+df_encode
+
+iris = pd.read_csv("iris.csv")
+iris.head()
+
+irisSet = (iris['Species']== 'Iris-setosa')
+print('Iris-setosa')
+print(iris[irisSet].describe())
+
+irisVer = (iris['Species']== 'Iris-versicolor')
+print('Iris-versicolor')
+print(iris[irisVer].describe())
+
+irisVir = (iris['Species']== 'Iris-virginica')
+print('Iris-virginica')
+print(iris[irisVir].describe())
